@@ -6,17 +6,17 @@ import RepositoryItem from "./RepositoryItem/RepositoryItem";
 import Loader from "../Loader/Loader";
 
 const Repositories = () => {
-    const repoList = useSelector(state => state.repositoryPage.items);
-    const fetching = useSelector(state => state.repositoryPage.isFetching);
+    const state = useSelector(state => state.repositoryPage);
     const dispatch = useDispatch();
-   useEffect(()=>dispatch(getRepos()) , []);
-
-
+    useEffect(() => dispatch(getRepos()), []);
     return (
         <div className={classes.container}>
 
-
-            {fetching ? <Loader />  : repoList.map(item=><RepositoryItem key={item.id} item={item}/>) }
+            <div className={classes.searchBox}>
+                <input type="text" className={classes.searchBoxInput}/>
+                <button className={classes.searchBoxBtn}>Search</button>
+            </div>
+            {state.isFetching ? <Loader/> : state.items.map(item => <RepositoryItem key={item.id} item={item}/>)}
 
 
         </div>

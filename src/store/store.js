@@ -9,3 +9,6 @@ const reducers = combineReducers({
 
 export const store = createStore(reducers,
     composeWithDevTools(applyMiddleware(thunk)));
+
+
+window.store = store.getState();
