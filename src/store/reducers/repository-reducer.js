@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const SET_REPOS = 'SET_REPOS';
 const SET_FETCHING = 'SET_FETCHING';
 
@@ -7,10 +8,10 @@ const initState = {
     isFetching: false
 };
 
-export const repositoryReducer =(state = initState, action)=> {
+export const repositoryReducer = (state = initState, action) => {
     switch (action.type) {
         case SET_REPOS:
-            return  {...state, items: action.payload}
+            return {...state, items: action.payload}
 
         case SET_FETCHING:
             return {...state, isFetching: action.payload}
@@ -23,21 +24,27 @@ export const repositoryReducer =(state = initState, action)=> {
 };
 
 
-const setRepos =(repos)=> ({
+const setRepos = (repos) => ({
     type: SET_REPOS,
     payload: repos
 });
 
-const setFetching =(bool)=> ({
+const setFetching = (bool) => ({
     type: SET_FETCHING,
     payload: bool
 });
 
 
-export const getRepos =(searchQuery = "stars:%3E1")=> async (dispatch)=> {
-    dispatch(setFetching(true));
-   const resp = await axios(`https://api.github.com/search/repositories?q=${searchQuery}&sort=stars`);
-    dispatch(setRepos(resp.data.items));
-    dispatch(setFetching(false));
+export const getRepos = (searchQuery = "stars:%3E1") => {
+    if (searchQuery == '') {
+        searchQuery = "stars:%3E1"
+    }
+    return async (dispatch) => {
+
+        dispatch(setFetching(true));
+        const resp = await axios(`https://api.github.com/search/repositories?q=${searchQuery}&sort=stars`);
+        dispatch(setRepos(resp.data.items));
+        dispatch(setFetching(false));
+    }
 
 };
