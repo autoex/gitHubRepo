@@ -2,19 +2,30 @@ import axios from "axios";
 
 const SET_REPOS = 'SET_REPOS';
 const SET_FETCHING = 'SET_FETCHING';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+
 
 const initState = {
     items: [],
-    isFetching: false
+    isFetching: false,
+    totalReps: 0,
+    perPage:5,
+    currentPage:1
 };
 
 export const repositoryReducer = (state = initState, action) => {
     switch (action.type) {
         case SET_REPOS:
-            return {...state, items: action.payload}
+            return {...state, items: action.repos, totalReps: action.totalReps}
 
         case SET_FETCHING:
             return {...state, isFetching: action.payload}
+
+        case SET_CURRENT_PAGE:
+            return {...state, currentPage: action.payload}
+
+
+
 
 
         default:
@@ -24,9 +35,10 @@ export const repositoryReducer = (state = initState, action) => {
 };
 
 
-const setRepos = (repos) => ({
+const setReps = (repos, totalReps) => ({
     type: SET_REPOS,
-    payload: repos
+    repos,
+    totalReps
 });
 
 const setFetching = (bool) => ({
@@ -34,16 +46,23 @@ const setFetching = (bool) => ({
     payload: bool
 });
 
+export const setCurrentPageAC = (page) => ({
+    type: SET_CURRENT_PAGE,
+    payload: page
+});
 
-export const getRepos = (searchQuery = "stars:%3E1") => {
+
+
+
+export const getRepos = (searchQuery = "stars:%3E1", currentPage=1) => {
     if (searchQuery == '') {
         searchQuery = "stars:%3E1"
     }
     return async (dispatch) => {
 
         dispatch(setFetching(true));
-        const resp = await axios(`https://api.github.com/search/repositories?q=${searchQuery}&sort=stars`);
-        dispatch(setRepos(resp.data.items));
+        const resp = await axios(`https://api.github.com/search/repositories?q=${searchQuery}&sort=stars&per_page=5&page=${currentPage}`);
+        dispatch(setReps(resp.data.items, resp.data.total_count));
         dispatch(setFetching(false));
     }
 

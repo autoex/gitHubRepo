@@ -1,0 +1,15 @@
+.paginator {
+  display: flex;
+  & span {
+    border-radius: 5px;
+    border: solid 1px palevioletred;
+    padding: 10px;
+    display: block;
+    margin: 0 5px 0 0;
+    cursor: pointer;
+    &.active {
+      cursor: text;
+      background: lightgray;
+    }
+  }
+}
