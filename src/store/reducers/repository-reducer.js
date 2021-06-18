@@ -9,7 +9,7 @@ const initState = {
     items: [],
     isFetching: false,
     totalReps: 0,
-    perPage:5,
+    perPage:9,
     currentPage:1
 };
 
@@ -54,14 +54,14 @@ export const setCurrentPageAC = (page) => ({
 
 
 
-export const getRepos = (searchQuery = "stars:%3E1", currentPage=1) => {
+export const getRepos = (searchQuery = "stars:%3E1", currentPage=1, perPage) => {
     if (searchQuery == '') {
         searchQuery = "stars:%3E1"
     }
     return async (dispatch) => {
 
         dispatch(setFetching(true));
-        const resp = await axios(`https://api.github.com/search/repositories?q=${searchQuery}&sort=stars&per_page=5&page=${currentPage}`);
+        const resp = await axios(`https://api.github.com/search/repositories?q=${searchQuery}&sort=stars&per_page=${perPage}&page=${currentPage}`);
         dispatch(setReps(resp.data.items, resp.data.total_count));
         dispatch(setFetching(false));
     }

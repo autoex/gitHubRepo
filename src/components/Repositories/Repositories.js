@@ -9,7 +9,7 @@ import Paginator from "../Paginator/Paginator";
 const Repositories = () => {
     const state = useSelector(state => state.repositoryPage);
     const dispatch = useDispatch();
-    useEffect(() => dispatch(getRepos(searchInput, state.currentPage)), [state.currentPage]);
+    useEffect(() => dispatch(getRepos(searchInput, state.currentPage, state.perPage)), [state.currentPage]);
     const [searchInput, setSearchInput] = useState();
 
     const searchBtnHandler = () => {
@@ -17,9 +17,9 @@ const Repositories = () => {
         dispatch(getRepos(searchInput))
 
     };
-    const setCurrentPage =(number)=> {
-       dispatch(setCurrentPageAC(number))
-       // console.log(number)
+    const setCurrentPage = (number) => {
+        dispatch(setCurrentPageAC(number))
+        // console.log(number)
 
     }
 
@@ -34,7 +34,7 @@ const Repositories = () => {
             </div>
             {state.isFetching ? <Loader/> :
                 <div> {state.items.map(item => <RepositoryItem key={item.id} item={item}/>)}
-                    <Paginator currentPage={state.currentPage} setCurrentPage={setCurrentPage} pagesTotal={pagesTotal}  />
+                    <Paginator currentPage={state.currentPage} setCurrentPage={setCurrentPage} pagesTotal={pagesTotal}/>
                 </div>
 
 
