@@ -3,12 +3,13 @@ import classes from './RepositoryItem.module.scss'
 import {Link} from "react-router-dom";
 
 const RepositoryItem = (props) => {
-
+console.log(props.item)
+    const repo = props.item;
     return (
         <div className={classes.item}>
             <div className={classes.header}>
                 <div>
-                    <Link to={'/card'} link={props.item.html_url} title={props.item.name} >{props.item.name}</Link>
+                    <Link to={`/card/${repo.owner.login}/${repo.name}`}>{props.item.name}</Link>
 
 
                 </div>

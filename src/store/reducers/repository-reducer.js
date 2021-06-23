@@ -9,8 +9,8 @@ const initState = {
     items: [],
     isFetching: false,
     totalReps: 0,
-    perPage:9,
-    currentPage:1
+    perPage: 9,
+    currentPage: 1
 };
 
 export const repositoryReducer = (state = initState, action) => {
@@ -23,9 +23,6 @@ export const repositoryReducer = (state = initState, action) => {
 
         case SET_CURRENT_PAGE:
             return {...state, currentPage: action.payload}
-
-
-
 
 
         default:
@@ -52,9 +49,7 @@ export const setCurrentPageAC = (page) => ({
 });
 
 
-
-
-export const getRepos = (searchQuery = "stars:%3E1", currentPage=1, perPage) => {
+export const getRepos = (searchQuery = "stars:%3E1", currentPage = 1, perPage) => {
     if (searchQuery == '') {
         searchQuery = "stars:%3E1"
     }
@@ -65,5 +60,16 @@ export const getRepos = (searchQuery = "stars:%3E1", currentPage=1, perPage) => 
         dispatch(setReps(resp.data.items, resp.data.total_count));
         dispatch(setFetching(false));
     }
+
+};
+
+
+export const getCurrentRepo = async (username, reponame, setRepo) => {
+
+
+    const resp = await axios(`https://api.github.com/repos/${username}/${reponame}`);
+    setRepo(resp.data);
+    // console.log(resp.data)
+
 
 };

@@ -6,8 +6,8 @@ import RepositoryItem from "./RepositoryItem/RepositoryItem";
 import Loader from "../Loader/Loader";
 import Paginator from "../Paginator/Paginator";
 
-const Repositories = (p) => {
-    console.log(p.history)
+const Repositories = (props) => {
+
     const state = useSelector(state => state.repositoryPage);
     const dispatch = useDispatch();
     useEffect(() => dispatch(getRepos(searchInput, state.currentPage, state.perPage)), [state.currentPage]);
