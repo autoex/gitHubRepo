@@ -6,7 +6,8 @@ import RepositoryItem from "./RepositoryItem/RepositoryItem";
 import Loader from "../Loader/Loader";
 import Paginator from "../Paginator/Paginator";
 
-const Repositories = () => {
+const Repositories = (p) => {
+    console.log(p.history)
     const state = useSelector(state => state.repositoryPage);
     const dispatch = useDispatch();
     useEffect(() => dispatch(getRepos(searchInput, state.currentPage, state.perPage)), [state.currentPage]);
@@ -25,7 +26,7 @@ const Repositories = () => {
 
     const pagesTotal = Math.ceil(state.totalReps / state.perPage);
     return (
-        <div className={classes.container}>
+        <div>
 
             <div className={classes.searchBox}>
                 <input type="text" value={searchInput} onChange={event => setSearchInput(event.target.value)}
