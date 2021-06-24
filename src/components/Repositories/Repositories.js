@@ -5,6 +5,7 @@ import {getRepos, setCurrentPageAC} from "../../store/reducers/repository-reduce
 import RepositoryItem from "./RepositoryItem/RepositoryItem";
 import Loader from "../Loader/Loader";
 import Paginator from "../Paginator/Paginator";
+import ErrorPage from "../Error/ErrorPage";
 
 const Repositories = (props) => {
 
@@ -20,11 +21,12 @@ const Repositories = (props) => {
     };
     const setCurrentPage = (number) => {
         dispatch(setCurrentPageAC(number))
-        // console.log(number)
+
 
     }
 
     const pagesTotal = Math.ceil(state.totalReps / state.perPage);
+    if(state.isFetchError) return <ErrorPage/>;
     return (
         <div>
 

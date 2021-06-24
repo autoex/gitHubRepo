@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import {getCurrentRepo} from "../../store/reducers/repository-reducer";
 import {useDispatch} from "react-redux";
 
@@ -16,9 +16,8 @@ const RepositoryPage = (props) => {
 
     return (
         <div>
-        <h1>{username}</h1>
+            <h1><Link onClick={() => props.history.goBack()}>back</Link> {username}</h1>
             <img src={repo.owner.avatar_url} />
-            <button onClick={() => props.history.goBack()}>Back</button>
         </div>
     );
 };
