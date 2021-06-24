@@ -6,6 +6,7 @@ import RepositoryItem from "./RepositoryItem/RepositoryItem";
 import Loader from "../Loader/Loader";
 import Paginator from "../Paginator/Paginator";
 import ErrorPage from "../Error/ErrorPage";
+import {Redirect} from "react-router-dom";
 
 const Repositories = (props) => {
 
@@ -26,10 +27,13 @@ const Repositories = (props) => {
     }
 
     const pagesTotal = Math.ceil(state.totalReps / state.perPage);
-    if(state.isFetchError) return <ErrorPage/>;
+    // if(state.isFetchError) return <Redirect to={'/error'} />;
     return (
         <div>
-
+            {state.isFetchError &&
+            <div className="alert alert-danger" role="alert">
+                Error
+            </div>}
             <div className={classes.searchBox}>
                 <input type="text" value={searchInput} onChange={event => setSearchInput(event.target.value)}
                        placeholder={'Type here...'} className={classes.searchBoxInput}/>
